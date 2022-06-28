@@ -2,6 +2,7 @@ package com.mercadolibre.mutan.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -13,8 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.mercadolibre.mutan.domain.Mutant;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
+@Slf4j
 class MutantRepositoryIT {
 	
 	@Autowired
@@ -78,6 +82,39 @@ class MutantRepositoryIT {
 		
 		//Assert
 		assertFalse(mutantOptional.isPresent(), "No se pudo borrar el registro");
+	}
+	
+	@Test
+	@Order(5)
+	void debeConsultarTodosLosRegistros() {
+		//Arrange
+		List<Mutant> mutants = null;
+		
+		
+		//Act
+		mutants = mutantRepository.findAll();
+		
+		mutants.forEach(mutant -> log.info(mutant.getMutantId().toString()));
+		
+		//Assert
+		assertFalse(mutants.isEmpty(), "No encontró registros");
+		
+	}
+	
+	@Test
+	@Order(6)
+	void debeCrearRegistroMutantAllArg() {
+		//Arrange
+		Integer mutantId = 1237;
+		String adn = "ATGCGA,CAGTGC,TTATGT,AGAAGG,CCCCTA,TCACTG";
+		String isMutant = "S";
+		Mutant mutant = new Mutant(mutantId, adn, isMutant);
+		
+		//Act
+		mutantRepository.save(mutant);
+		
+		//Assert
+		assertNotNull(mutant, "El registro es nulo, no se pudo grabar");
 	}
 
 }
