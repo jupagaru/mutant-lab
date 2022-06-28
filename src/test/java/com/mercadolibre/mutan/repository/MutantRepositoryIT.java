@@ -2,6 +2,8 @@ package com.mercadolibre.mutan.repository;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -39,7 +41,7 @@ class MutantRepositoryIT {
 		mutantRepository.save(mutant);
 		
 		//Assert
-		assertNotNull(mutant, "El mutante es nulo, no se pudo grabar");
+		assertNotNull(mutant, "El registro es nulo, no se pudo grabar");
 	}
 	
 	@Test
@@ -50,14 +52,32 @@ class MutantRepositoryIT {
 		Mutant mutant = null;
 		
 		mutant = mutantRepository.findById(mutantId).get();
-		System.out.println("encontró mutant "+ mutant.getAdn());
 		mutant.setIsMutant("N");
 		
 		//Act
 		mutantRepository.save(mutant);
 		
 		//Assert
-		assertNotNull(mutant, "El mutante es nulo, no se pudo modificar");
+		assertNotNull(mutant, "El registro nos se pudo modificar");
+	}
+	
+	@Test
+	@Order(4)
+	void debeBorrarRegistroMutant() {
+		//Arrange
+		Integer mutantId = 1234;
+		Mutant mutant = null;
+		Optional<Mutant> mutantOptional = null;
+		
+		assertTrue(mutantRepository.findById(mutantId).isPresent(), "No encontró el registro");
+		mutant = mutantRepository.findById(mutantId).get();
+		
+		//Act
+		mutantRepository.delete(mutant);
+		mutantOptional = mutantRepository.findById(mutantId);
+		
+		//Assert
+		assertFalse(mutantOptional.isPresent(), "No se pudo borrar el registro");
 	}
 
 }
