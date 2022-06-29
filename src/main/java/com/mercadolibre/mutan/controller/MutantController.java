@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mercadolibre.mutan.domain.Mutant;
+import com.mercadolibre.mutan.dto.MutantDTO;
 import com.mercadolibre.mutan.service.MutantService;
 
 @RestController
@@ -18,7 +18,7 @@ public class MutantController {
 	MutantService mutantService;
 	
 	@GetMapping()
-	public List<Mutant> findAll() throws Exception{
+	public List<MutantDTO> findAll() throws Exception{
 		return null;
 	}
 
