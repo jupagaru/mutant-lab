@@ -1,4 +1,4 @@
-package com.mercadolibre.mutan.service;
+package com.mercadolibre.mutant.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mercadolibre.mutan.domain.Mutant;
-import com.mercadolibre.mutan.repository.MutantRepository;
+import com.mercadolibre.mutant.domain.Mutant;
+import com.mercadolibre.mutant.repository.MutantRepository;
 
 @Service
 public class MutantServiceImpl implements MutantService{

@@ -1,4 +1,4 @@
-package com.mercadolibre.mutan.controller;
+package com.mercadolibre.mutant.controller;
 
 import java.time.Instant;
 import java.util.Collections;

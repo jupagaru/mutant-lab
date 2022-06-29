@@ -1,4 +1,4 @@
-package com.mercadolibre.mutan.domain;
+package com.mercadolibre.mutant.domain;
 
 import java.io.Serializable;
 

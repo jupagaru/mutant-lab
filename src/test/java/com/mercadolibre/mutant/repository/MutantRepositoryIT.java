@@ -1,8 +1,6 @@
-package com.mercadolibre.mutan.service;
+package com.mercadolibre.mutant.repository;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,29 +12,28 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.mercadolibre.mutan.domain.Mutant;
+import com.mercadolibre.mutant.domain.Mutant;
+import com.mercadolibre.mutant.repository.MutantRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
 @Slf4j
-class MutantServiceIT {
+class MutantRepositoryIT {
 	
-		
 	@Autowired
-	MutantService mutantService;
-	
-	
+	MutantRepository mutantRepository;
+
 	@Test
 	@Order(1)
 	void debeValidarLasDependencias() {
-		assertNotNull(mutantService);
+		assertNotNull(mutantRepository);
 	}
 	
 	@Test
 	@Order(2)
-	void debeCrearRegistroMutant() throws Exception {
+	void debeCrearRegistroMutant() {
 		//Arrange
 		Integer mutantId = 1234;
 		
@@ -46,7 +43,7 @@ class MutantServiceIT {
 		mutant.setIsMutant("S");
 		
 		//Act
-		mutantService.save(mutant);
+		mutantRepository.save(mutant);
 		
 		//Assert
 		assertNotNull(mutant, "El registro es nulo, no se pudo grabar");
@@ -54,16 +51,16 @@ class MutantServiceIT {
 	
 	@Test
 	@Order(3)
-	void debeModificarRegistroMutant() throws Exception {
+	void debeModificarRegistroMutant() {
 		//Arrange
 		Integer mutantId = 1234;
 		Mutant mutant = null;
 		
-		mutant = mutantService.findById(mutantId).get();
+		mutant = mutantRepository.findById(mutantId).get();
 		mutant.setIsMutant("N");
 		
 		//Act
-		mutantService.update(mutant);
+		mutantRepository.save(mutant);
 		
 		//Assert
 		assertNotNull(mutant, "El registro nos se pudo modificar");
@@ -71,18 +68,18 @@ class MutantServiceIT {
 	
 	@Test
 	@Order(4)
-	void debeBorrarRegistroMutant() throws Exception {
+	void debeBorrarRegistroMutant() {
 		//Arrange
 		Integer mutantId = 1234;
 		Mutant mutant = null;
 		Optional<Mutant> mutantOptional = null;
 		
-		assertTrue(mutantService.findById(mutantId).isPresent(), "No encontró el registro");
-		mutant = mutantService.findById(mutantId).get();
+		assertTrue(mutantRepository.findById(mutantId).isPresent(), "No encontró el registro");
+		mutant = mutantRepository.findById(mutantId).get();
 		
 		//Act
-		mutantService.delete(mutant);
-		mutantOptional = mutantService.findById(mutantId);
+		mutantRepository.delete(mutant);
+		mutantOptional = mutantRepository.findById(mutantId);
 		
 		//Assert
 		assertFalse(mutantOptional.isPresent(), "No se pudo borrar el registro");
@@ -96,13 +93,29 @@ class MutantServiceIT {
 		
 		
 		//Act
-		mutants = mutantService.findAll();
+		mutants = mutantRepository.findAll();
 		
 		mutants.forEach(mutant -> log.info(mutant.getMutantId().toString()));
 		
 		//Assert
 		assertFalse(mutants.isEmpty(), "No encontró registros");
 		
+	}
+	
+	@Test
+	@Order(6)
+	void debeCrearRegistroMutantAllArg() {
+		//Arrange
+		Integer mutantId = 1237;
+		String adn = "ATGCGA,CAGTGC,TTATGT,AGAAGG,CCCCTA,TCACTG";
+		String isMutant = "S";
+		Mutant mutant = new Mutant(mutantId, adn, isMutant);
+		
+		//Act
+		mutantRepository.save(mutant);
+		
+		//Assert
+		assertNotNull(mutant, "El registro es nulo, no se pudo grabar");
 	}
 
 }

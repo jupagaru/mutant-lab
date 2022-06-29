@@ -1,4 +1,4 @@
-package com.mercadolibre.mutan.service;
+package com.mercadolibre.mutant.service;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,11 +1,11 @@
-package com.mercadolibre.mutan.mapper;
+package com.mercadolibre.mutant.mapper;
 
 import java.util.List;
 
 import org.mapstruct.Mapper;
 
-import com.mercadolibre.mutan.domain.Mutant;
-import com.mercadolibre.mutan.dto.MutantDTO;
+import com.mercadolibre.mutant.domain.Mutant;
+import com.mercadolibre.mutant.dto.MutantDTO;
 
 @Mapper
 public interface MutantMapper {

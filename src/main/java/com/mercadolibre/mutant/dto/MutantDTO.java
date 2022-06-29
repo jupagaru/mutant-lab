@@ -1,4 +1,4 @@
-package com.mercadolibre.mutan.dto;
+package com.mercadolibre.mutant.dto;
 
 import javax.validation.constraints.NotNull;
 
