@@ -9,5 +9,7 @@ import com.mercadolibre.mutan.dto.MutantDTO;
 public interface MutantMapper {
 	
 	public MutantDTO mutantToMutantDTO(Mutant mutant);
+	
+	public Mutant mutantDTOToMutant(MutantDTO mutantDTO);
 
 }
