@@ -2,10 +2,13 @@ package com.mercadolibre.mutan.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +28,18 @@ public class MutantController {
 	@Autowired
 	MutantMapper mutantMapper;
 	
+	@PutMapping
+	public MutantDTO update(@Valid @RequestBody MutantDTO mutantDTO) throws Exception {
+		Mutant mutant = mutantMapper.mutantDTOToMutant(mutantDTO);
+		mutant = mutantService.update(mutant);
+		mutantDTO = mutantMapper.mutantToMutantDTO(mutant);
+
+		return mutantDTO;
+	}
+
+	
 	@PostMapping
-	public MutantDTO save(@RequestBody MutantDTO mutantDTO) throws Exception{
+	public MutantDTO save(@Valid @RequestBody MutantDTO mutantDTO) throws Exception{
 		Mutant mutant = mutantMapper.mutantDTOToMutant(mutantDTO);
 		mutant = mutantService.save(mutant);
 		mutantDTO = mutantMapper.mutantToMutantDTO(mutant);
