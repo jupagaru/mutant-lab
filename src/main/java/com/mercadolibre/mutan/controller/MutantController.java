@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +25,13 @@ public class MutantController {
 	@Autowired
 	MutantMapper mutantMapper;
 	
+	@PostMapping
+	public MutantDTO save(@RequestBody MutantDTO mutantDTO) throws Exception{
+		Mutant mutant = mutantMapper.mutantDTOToMutant(mutantDTO);
+		mutant = mutantService.save(mutant);
+		mutantDTO = mutantMapper.mutantToMutantDTO(mutant);
+		return mutantDTO;
+	}
 	
 	@GetMapping("/{mutantId}")
 	public MutantDTO findById(@PathVariable("mutantId") Integer  mutantId) throws Exception{
